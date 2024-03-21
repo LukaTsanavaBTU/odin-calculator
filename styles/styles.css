@@ -8,6 +8,18 @@ body {
     align-items: center;
 }
 
+.main {
+    width: 100%;
+    max-width: 400px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.4);
+    padding: 3px;
+    border-radius: 5px;
+}
+
 .display {
     background-color: rgba(0, 0, 0, 0.3);
     font-family: "Madimi One", sans-serif;
@@ -20,28 +32,26 @@ body {
     justify-content: end;
 }
 
-.main {
-    width: 400px;
-    height: 600px;
-    display: flex;
-    flex-direction: column;
-}
-
 .row {
+    gap: 5px;
     display: flex;
-    justify-content: center;
     flex: 1;
 }
 
 .row button {
-    width: 50px;
     border: 0.1px solid grey;
     border-radius: 5px;
     font-family: "Madimi One", sans-serif;
     font-size: larger;
     flex: 1;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
-button.clear, button.delete {
-    width: 75px;
+.row button:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.row button:active {
+    background-color: rgba(0, 0, 0, 0.1);
 }
