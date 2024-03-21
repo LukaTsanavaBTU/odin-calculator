@@ -43,7 +43,7 @@ numberButtons.forEach(button => {
     button.addEventListener("click", event => {
         const numPressed = button.textContent;
         const curNum = displayDiv.textContent;
-        if (equalsPressed && numPressed === "0" && currentNum === "0") {
+        if (equalsPressed && numPressed === "0" && curNum === "0") {
             displayDiv.textContent = "";
             displayDiv.textContent += button.textContent;
             equalsPressed = false;
