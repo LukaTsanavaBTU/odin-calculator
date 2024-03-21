@@ -31,6 +31,7 @@ function operate(a, b, operation) {
 
 function equalsHandler(event) {
     if (operandA && operator) {
+        operandA = parseFloat(operandA);
         operandB = parseFloat(displayDiv.textContent);
         displayDiv.textContent = operate(operandA, operandB, operator);
         operandA = operandB = operator = null;
@@ -42,7 +43,11 @@ numberButtons.forEach(button => {
     button.addEventListener("click", event => {
         const numPressed = button.textContent;
         const curNum = displayDiv.textContent;
-        if (equalsPressed) {
+        if (equalsPressed && numPressed === "0" && currentNum === "0") {
+            displayDiv.textContent = "";
+            displayDiv.textContent += button.textContent;
+            equalsPressed = false;
+        } else if (equalsPressed) {
             displayDiv.textContent = "";
             equalsPressed = false;
         } 
@@ -59,7 +64,7 @@ operationButtons.forEach(button => {
     button.addEventListener("click", event => {
         equalsHandler();
         equalsPressed = true
-        operandA = parseFloat(displayDiv.textContent);
+        operandA = displayDiv.textContent;
         operator = button.textContent;
     });
 });
@@ -95,7 +100,9 @@ decimalButton.addEventListener("click", event => {
 deleteButton.addEventListener("click", event => {
     const currentNum = displayDiv.textContent;
     if (currentNum !== "0") {
-        if (currentNum.length === 1 || (currentNum.length === 2 && currentNum.at(0) === "-")) {
+        if (currentNum.length === 1 
+            || (currentNum.length === 2 && currentNum.at(0) === "-") 
+            || currentNum === "Infinity" || currentNum === "NaN") {
             displayDiv.textContent = "0";
         } else {
             displayDiv.textContent = currentNum.slice(0, currentNum.length - 1);
@@ -103,6 +110,5 @@ deleteButton.addEventListener("click", event => {
     }
 });
 
-// add division by zero handling
 // add display overflow handling
 // add keyboard support
