@@ -1,3 +1,13 @@
+const displayDiv = document.querySelector(".display");
+const numberButtons = document.querySelectorAll(".number");
+const operationButtons = document.querySelectorAll(".operation");
+const equalsButton = document.querySelector(".equals");
+const clearButton = document.querySelector(".clear");
+const positiveNegativeButton = document.querySelector(".positive-negative");
+
+let operandA = operandB = operator = null;
+let equalsPressed = false;
+
 const operations = {
     "+"(a, b) {
         return a + b;
@@ -6,10 +16,10 @@ const operations = {
         return a - b;
     },
     "x"(a, b) {
-        return a / b;
+        return a * b;
     },
     "÷"(a, b) {
-        return a * b;
+        return a / b;
     }
 };
 
@@ -17,14 +27,14 @@ function operate(a, b, operation) {
     return operations[operation](a, b);
 }
 
-const displayDiv = document.querySelector(".display");
-const numberButtons = document.querySelectorAll(".number");
-const operationButtons = document.querySelectorAll(".operation");
-const equalsButton = document.querySelector(".equals");
-const clearButton = document.querySelector(".clear");
-
-let operandA = operandB = operator = null;
-let equalsPressed = false;
+function equalsHandler(event) {
+    if (operandA && operator) {
+        operandB = parseInt(displayDiv.textContent);
+        displayDiv.textContent = operate(operandA, operandB, operator);
+        operandA = operandB = operator = null;
+        equalsPressed = true;
+    }
+}
 
 numberButtons.forEach(button => {
     button.addEventListener("click", event => {
@@ -45,25 +55,29 @@ numberButtons.forEach(button => {
 
 operationButtons.forEach(button => {
     button.addEventListener("click", event => {
+        equalsHandler();
+        equalsPressed = true
         operandA = parseInt(displayDiv.textContent);
         operator = button.textContent;
-        displayDiv.textContent = "";
-        // Add CHaining
     });
 });
 
-equalsButton.addEventListener("click", event => {
-    if (operandA && operator) {
-        operandB = parseInt(displayDiv.textContent);
-        displayDiv.textContent = operate(operandA, operandB, operator);
-        operandA = operandB = operator = null;
-        equalsPressed = true;
-    }
-});
+equalsButton.addEventListener("click", equalsHandler);
 
 clearButton.addEventListener("click", event => {
-    displayDiv.textContent = "";
+    displayDiv.textContent = "0";
     operandA = operandB = operator = null;
+});
+
+positiveNegativeButton.addEventListener("click", event => {
+    const currentNum = displayDiv.textContent;
+    if (displayDiv.textContent !== "0") {
+        if (currentNum.at(0) === "-") {
+            displayDiv.textContent = currentNum.slice(1);
+        } else {
+            displayDiv.textContent = "-" + currentNum;
+        }
+    }
 });
 
 
