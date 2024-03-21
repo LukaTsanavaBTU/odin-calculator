@@ -5,6 +5,7 @@ const equalsButton = document.querySelector(".equals");
 const clearButton = document.querySelector(".clear");
 const positiveNegativeButton = document.querySelector(".positive-negative");
 const decimalButton = document.querySelector(".decimal");
+const deleteButton = document.querySelector(".delete");
 
 let operandA = operandB = operator = null;
 let equalsPressed = false;
@@ -91,3 +92,17 @@ decimalButton.addEventListener("click", event => {
     }
 });
 
+deleteButton.addEventListener("click", event => {
+    const currentNum = displayDiv.textContent;
+    if (currentNum !== "0") {
+        if (currentNum.length === 1 || (currentNum.length === 2 && currentNum.at(0) === "-")) {
+            displayDiv.textContent = "0";
+        } else {
+            displayDiv.textContent = currentNum.slice(0, currentNum.length - 1);
+        }
+    }
+});
+
+// add division by zero handling
+// add display overflow handling
+// add keyboard support
