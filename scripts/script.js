@@ -4,6 +4,7 @@ const operationButtons = document.querySelectorAll(".operation");
 const equalsButton = document.querySelector(".equals");
 const clearButton = document.querySelector(".clear");
 const positiveNegativeButton = document.querySelector(".positive-negative");
+const decimalButton = document.querySelector(".decimal");
 
 let operandA = operandB = operator = null;
 let equalsPressed = false;
@@ -29,7 +30,7 @@ function operate(a, b, operation) {
 
 function equalsHandler(event) {
     if (operandA && operator) {
-        operandB = parseInt(displayDiv.textContent);
+        operandB = parseFloat(displayDiv.textContent);
         displayDiv.textContent = operate(operandA, operandB, operator);
         operandA = operandB = operator = null;
         equalsPressed = true;
@@ -57,7 +58,7 @@ operationButtons.forEach(button => {
     button.addEventListener("click", event => {
         equalsHandler();
         equalsPressed = true
-        operandA = parseInt(displayDiv.textContent);
+        operandA = parseFloat(displayDiv.textContent);
         operator = button.textContent;
     });
 });
@@ -80,4 +81,13 @@ positiveNegativeButton.addEventListener("click", event => {
     }
 });
 
+decimalButton.addEventListener("click", event => {
+    const currentNum = displayDiv.textContent;
+    if (equalsPressed) {
+        displayDiv.textContent = "0."
+        equalsPressed = false;
+    } else if (!currentNum.includes(".")) {
+        displayDiv.textContent += ".";
+    }
+});
 
